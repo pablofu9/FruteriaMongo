@@ -1,0 +1,42 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 4 nov 2022, 17:01:29
+    Author     : Pablo
+*/
+
+Pane {
+    -fx-background-color: #FFFFFF;
+    /*-fx-effect: dropshadow( gaussian, rgba(0, 255, 255, 0.4), 10, 0.5, 0.0, 0.0 );*/
+    -fx-background-radius: 5;
+    -fx-border-style: solid;
+    -fx-border-radius:4px;
+}
+
+Button {
+  
+  -fx-box-shadow:inset 0px -3px 7px 0px #29bbff;
+	-fx-background:linear-gradient(to bottom, #2dabf9 5%, #0688fa 100%);
+	-fx-background-color:#2dabf9;
+	-fx-border-radius:3px;
+	
+	-fx-display:inline-block;
+	
+	-fx-color:#ffffff;
+	-fx-font-family:Arial;
+	-fx-font-size:15px;
+	
+	-fx-text-decoration:none;
+	
+  
+}
+Button:hover {
+	-fx-background:linear-gradient(to bottom, #0688fa 5%, #2dabf9 100%);
+	-fx-background-color:#0688fa;
+}
+
+#panelFrutas{
+    -fx-background-color: #FFFFFF;
+}

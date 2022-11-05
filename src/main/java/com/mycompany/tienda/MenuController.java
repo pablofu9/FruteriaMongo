@@ -26,8 +26,9 @@ import static validar.Validaciones.calcularPrecio;
 import Conect.ConnectionDB;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
-
+import org.bson.conversions.Bson;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.model.Filters;
 /**
  * FXML Controller class
  *
@@ -176,31 +177,24 @@ public class MenuController implements Initializable {
 
     }
     
+    //METODO PARA AÑADIR AL CARRITO
     @FXML
     private void comprar(){
-        
+            
             Validaciones.nuevaFruta(conexion,id,lblCompra.getText() , Integer.parseInt(txtCompra.getText()),precios[id-1]);
-            /*if(Validaciones.buscarFruta(con, id,Integer.parseInt(txtCompra.getText()))==false){
-                Validaciones.insertarFruta(con,id, lblCompra.getText(),Integer.parseInt(txtCompra.getText()), precios[id-1] );
-                vaciar.setVisible(true);
-                
-            }else{
-                Validaciones.modificarFruta(id,Integer.parseInt(txtCompra.getText()), precios[id-1]);
-            }*/
-        
-           
-        
-        
+            vaciar.setVisible(true);
+         
     }
     
     //METODO PARA VACIAR EL CARRITO
     @FXML
     private void vaciarCarrito(){
-        /*if(Validaciones.crearAlertaConf("¿Seguro que quieres vaciar el carrito?")){
-            Validaciones.borrarDatos(con);
-            panelFrutas.setVisible(false);
-            vaciar.setVisible(false);
-        }*/
+        if(Validaciones.crearAlertaConf("¿Seguro que quieres vaciar el carrito?")){
+            Validaciones.vaciarCarrito(conexion);
+        }else{
+            Validaciones.crearAlertaInfo("Sigue comprando");
+        }
+        
         
     }
 

@@ -10,6 +10,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -47,15 +48,30 @@ public class Validaciones {
                 //SALTA EXCEPCION CUANDO LA FRUTA YA ESTA EN LA BD
              
         }else{
-            System.out.println("Encontrado");
-            Bson actualizado = new Document("cantidad",cant);
+            //FALTA ACTUALIZAR EL PRECIOTOTAL
+            double precioSumador=encontrado.getDouble("precioTotal");
+            
+            int cantTotal=encontrado.getInteger("cantidad");
+            Bson actualizado = new Document("cantidad",cantTotal+cant);
+            
             Bson operar = new Document("$set", actualizado);
+            
             collection.updateOne(encontrado, operar);
+            
             crearAlertaInfo("Carrito actualizado");
         }
     }
 
-    
+    //METODO PARA VACAIR EL CARRITO
+    public static void vaciarCarrito(MongoClient con){
+        MongoDatabase database = con.getDatabase("fruteria");
+        MongoCollection<Document> collection = database.getCollection("frutas");
+        try{
+         collection.deleteMany(Filters.gte("_id", 0));
+        }catch(NumberFormatException e){
+            
+        }
+    }
 
     
 

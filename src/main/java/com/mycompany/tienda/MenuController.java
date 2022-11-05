@@ -8,7 +8,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
 import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -24,7 +23,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import validar.Validaciones;
 import static validar.Validaciones.calcularPrecio;
-import Conect.Conexion;
+import Conect.ConnectionDB;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
+
+import com.mongodb.MongoClientURI;
 /**
  * FXML Controller class
  *
@@ -32,13 +35,13 @@ import Conect.Conexion;
  */
 public class MenuController implements Initializable {
 
-    
+    MongoClient conexion;
     /**
      * Initializes the controller class.
      */
     int ids[] = {1,2,3,4,5,6,7,8,9};
     double precios[] = {0.8,1,2,1.2,2.2,1.8,4,3.2,1};
-    Connection con = Conexion.getConexion();
+    
     int id;
     
     @FXML
@@ -60,6 +63,8 @@ public class MenuController implements Initializable {
     @FXML
     private Button botonNaraja, botonPera, botonFresa, botonSandia, botonMelon, botonLimon, botonPapaya, botonAguacate, botonPlatano, botonCompra, botonCalcular, vaciar;
 
+    
+    //BOTONES QUE MANDAN LA FRUTA QUE QUIERES COMPRAR AL PANEL DE COMPRA
     @FXML
     private void comprarNaranja() throws MalformedURLException {
         lblCompra.setText("NARANJA");
@@ -144,6 +149,7 @@ public class MenuController implements Initializable {
     //BOTON PARA CALCULAR LOS PRECIOS
     
     
+    //SELECCIONAMOS EL PRECIO DE LA FRUTA, SEGUN EL ID
     @FXML
     private void calculoPrecio() {
         
@@ -173,13 +179,14 @@ public class MenuController implements Initializable {
     @FXML
     private void comprar(){
         
-            if(Validaciones.buscarFruta(con, id,Integer.parseInt(txtCompra.getText()))==false){
+            Validaciones.nuevaFruta(conexion,id,lblCompra.getText() , Integer.parseInt(txtCompra.getText()),precios[id-1]);
+            /*if(Validaciones.buscarFruta(con, id,Integer.parseInt(txtCompra.getText()))==false){
                 Validaciones.insertarFruta(con,id, lblCompra.getText(),Integer.parseInt(txtCompra.getText()), precios[id-1] );
                 vaciar.setVisible(true);
                 
             }else{
                 Validaciones.modificarFruta(id,Integer.parseInt(txtCompra.getText()), precios[id-1]);
-            }
+            }*/
         
            
         
@@ -189,17 +196,19 @@ public class MenuController implements Initializable {
     //METODO PARA VACIAR EL CARRITO
     @FXML
     private void vaciarCarrito(){
-        if(Validaciones.crearAlertaConf("¿Seguro que quieres vaciar el carrito?")){
+        /*if(Validaciones.crearAlertaConf("¿Seguro que quieres vaciar el carrito?")){
             Validaciones.borrarDatos(con);
             panelFrutas.setVisible(false);
             vaciar.setVisible(false);
-        }
+        }*/
         
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        //CONECTA AL INICIAR LA CLASE
+        conexion=ConnectionDB.conectar();
+        MongoDatabase database= conexion.getDatabase("fruteria");
     }
 
 }

@@ -29,6 +29,12 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.conversions.Bson;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.model.Filters;
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 /**
  * FXML Controller class
  *
@@ -62,7 +68,7 @@ public class MenuController implements Initializable {
     private Pane mandarina, panelPrincipal, panelComprar;
 
     @FXML
-    private Button botonNaraja, botonPera, botonFresa, botonSandia, botonMelon, botonLimon, botonPapaya, botonAguacate, botonPlatano, botonCompra, botonCalcular, vaciar;
+    private Button botonNaraja, botonPera, botonFresa, botonSandia, botonMelon, botonLimon, botonPapaya, botonAguacate, botonPlatano, botonCompra, botonCalcular, vaciar, botonLiquidar;
 
     
     //BOTONES QUE MANDAN LA FRUTA QUE QUIERES COMPRAR AL PANEL DE COMPRA
@@ -206,6 +212,20 @@ public class MenuController implements Initializable {
         
     }
 
+    //BOTON PARA ABRIR LA PANTALLA DEL RESUMEN
+    @FXML
+    private void liquidarCarrito() throws IOException{
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("ResumenCompra.fxml"));
+        Scene scene = new Scene(root);
+        stage = new Stage(StageStyle.DECORATED);
+        stage.setScene(scene);
+        stage.show();
+        //Para cerrar el login
+        Stage loginStage = (Stage) this.botonLiquidar.getScene().getWindow();
+        loginStage.close();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //CONECTA AL INICIAR LA CLASE

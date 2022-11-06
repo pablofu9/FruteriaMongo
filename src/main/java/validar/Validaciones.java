@@ -5,13 +5,15 @@
 package validar;
 
 import Conect.ConnectionDB;
+import com.mongodb.BasicDBObject;
 import com.mongodb.ErrorCategory;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import java.util.Optional;
+import java.util.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -31,7 +33,6 @@ public class Validaciones {
         return total;
     }
 
-    
     //METODO PARA AÑADIR UNA NUEVA FRUTA Y PARA ACTUALIZAR SI LA FRUTA YA ESTA EN EL CARRITO
     public static void nuevaFruta(MongoClient con, int id, String nombre, int cant, double precio) {
 
@@ -44,38 +45,40 @@ public class Validaciones {
             Document d1 = new Document();
             d1.append("_id", id).append("nombre", nombre).append("cantidad", cant)
                     .append("precio", precio).append("precioTotal", cant * precio);
-            
-                collection.insertOne(d1);
-                crearAlertaInfo("Fruta añadida al carrito");
-                //SALTA EXCEPCION CUANDO LA FRUTA YA ESTA EN LA BD
-             
-        }else{
+
+            collection.insertOne(d1);
+            crearAlertaInfo("Fruta añadida al carrito");
+            //SALTA EXCEPCION CUANDO LA FRUTA YA ESTA EN LA BD
+
+        } else
+        {
             //FALTA ACTUALIZAR EL PRECIOTOTAL
-            double precioSumador=encontrado.getDouble("precioTotal");
-            int cantTotal=encontrado.getInteger("cantidad");
+            double precioSumador = encontrado.getDouble("precioTotal");
+            int cantTotal = encontrado.getInteger("cantidad");
             Document third = collection.find(Filters.eq("_id", encontrado.getInteger("_id"))).first();
-            
+
             collection.updateOne(new Document("_id", encontrado.getInteger("_id")),
-                    new Document("$set", new Document("cantidad", cantTotal+cant)));
+                    new Document("$set", new Document("cantidad", cantTotal + cant)));
             collection.updateOne(new Document("_id", encontrado.getInteger("_id")),
-                    new Document("$set", new Document("precioTotal", precioSumador+(cant*precio))));
-     
+                    new Document("$set", new Document("precioTotal", precioSumador + (cant * precio))));
+
             crearAlertaInfo("Carrito actualizado");
         }
     }
 
     //METODO PARA VACAIR EL CARRITO
-    public static void vaciarCarrito(MongoClient con){
+    public static void vaciarCarrito(MongoClient con) {
         MongoDatabase database = con.getDatabase("fruteria");
         MongoCollection<Document> collection = database.getCollection("frutas");
-        try{
-         collection.deleteMany(Filters.gte("_id", 0));
-        }catch(NumberFormatException e){
-            
+        try
+        {
+            collection.deleteMany(Filters.gte("_id", 0));
+        } catch (NumberFormatException e)
+        {
+
         }
     }
 
-    
     //CREAR ALERTA DE INFORMACIÓN
     public static void crearAlertaInfo(String textoAlerta) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -85,7 +88,6 @@ public class Validaciones {
         alert.showAndWait();
     }
 
-    
     //CREAR ALERTA DE CONFIRMACIÓN
     public static boolean crearAlertaConf(String confirmar) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -102,13 +104,39 @@ public class Validaciones {
         }
     }
 
-    
     //COMPROBAR QUE LOS TXT NO ESTAN VACIOS
-    public static boolean formVacios(String texto){
-        if(texto.isEmpty()){
+    public static boolean formVacios(String texto) {
+        if (texto.isEmpty())
+        {
             return false;
-        }else{
+        } else
+        {
             return true;
         }
+    }
+
+    public static ObservableList<Document> getFrutas(MongoClient con) {
+        MongoDatabase database = con.getDatabase("fruteria");
+        MongoCollection<Document> collection = database.getCollection("frutas");
+        ObservableList<Document> listaTabla;
+        listaTabla = FXCollections.observableArrayList();
+        
+       
+        MongoCursor<Document> cursor2 = collection.find().iterator();
+        try
+        {
+            while (cursor2.hasNext())
+            {
+
+                //listaTabla.add(cursor2.next());
+                System.out.println(listaTabla);
+            }
+
+        } finally
+        {
+            cursor2.close();
+        }
+
+        return listaTabla;
     }
 }

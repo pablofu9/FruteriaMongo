@@ -1,0 +1,25 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 6 nov 2022, 12:31:34
+    Author     : Pablo
+*/
+#titulo{
+    -fx-font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+
+    -fx-text-transform: uppercase;
+    -fx-display: block;
+    -fx-font-size: 60px;
+    -fx-color: #f1ebe5;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: -4px;
+    -fx-text-align: center;
+    -fx-background: linear-gradient(to bottom, #ece4d9 0%,#e9dfd1 100%);
+    -fx-position: absolute;
+    -fx-padding: 100px;
+    -fx-top: 50%;
+    -fx-left: 50%;
+    -fx-border-radius: 20px;
+}

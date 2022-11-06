@@ -25,14 +25,21 @@
             <artifactId>mongo-java-driver</artifactId>
             <version>3.12.11</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mongodb/bson -->
+        
+
         <!-- https://mvnrepository.com/artifact/org.json/json -->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20220924</version>
         </dependency>
-        
-
+        <!-- https://mvnrepository.com/artifact/com.jfoenix/jfoenix -->
+        <dependency>
+            <groupId>com.jfoenix</groupId>
+            <artifactId>jfoenix</artifactId>
+            <version>9.0.1</version>
+        </dependency>
 
     </dependencies>
     <build>

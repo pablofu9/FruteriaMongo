@@ -13,6 +13,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.util.JSON;
 import java.util.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -125,11 +126,12 @@ public class Validaciones {
         MongoCursor<Document> cursor2 = collection.find().iterator();
         try
         {
+            
             while (cursor2.hasNext())
             {
-
-                //listaTabla.add(cursor2.next());
-                System.out.println(listaTabla);
+               
+                listaTabla.addAll(cursor2.next());
+                
             }
 
         } finally

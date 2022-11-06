@@ -5,21 +5,29 @@
 package com.mycompany.tienda;
 
 import Conect.ConnectionDB;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.bson.Document;
 import validar.Validaciones;
 
@@ -36,25 +44,40 @@ public class ResumenCompraController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
+    private JFXButton btnVolver, btnActualizar;
+    
+    @FXML
     private JFXTextField txtNombre, txtCantidad, txtPrecioTotal;
 
     @FXML
     private Text titulo;
 
     @FXML
-    private TableView<Document> tablaFrutas;
+    public TableView<Document> tablaFrutas;
     @FXML
-    private TableColumn<Document, Integer> colId;
+    public TableColumn<Document, Integer> colId;
     @FXML
-    private TableColumn<Document, Integer> colCantidad;
+    public TableColumn<Document, Integer> colCantidad;
     @FXML
-    private TableColumn<Document, String> colNombre;
+    public TableColumn<Document, String> colNombre;
     @FXML
-    private TableColumn<Document, Double> colPrecio;
+    public TableColumn<Document, Double> colPrecio;
 
     @FXML
-    private TableColumn<Document, Double> colPrecioTotal;
+    public TableColumn<Document, Double> colPrecioTotal;
     
+    @FXML
+    private void volverAtras() throws IOException{
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+        Scene scene = new Scene(root);
+        stage = new Stage(StageStyle.DECORATED);
+        stage.setScene(scene);
+        stage.show();
+        //Para cerrar el login
+        Stage loginStage = (Stage) this.btnVolver.getScene().getWindow();
+        loginStage.close();
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         conexion = ConnectionDB.conectar();
@@ -65,10 +88,13 @@ public class ResumenCompraController implements Initializable {
         colCantidad.setCellValueFactory(new PropertyValueFactory<Document, Integer>("cantidad"));
         colPrecio.setCellValueFactory(new PropertyValueFactory<Document, Double>("precio"));
         colPrecioTotal.setCellValueFactory(new PropertyValueFactory<Document, Double>("precioTotal"));
-        System.out.println(Validaciones.getFrutas(conexion));
         
+        ObservableList<Document> lista;
+        lista=Validaciones.getFrutas(conexion);
         //FALTA LLENAR LA TABlA
-        //tablaFrutas.setItems(Validaciones.getFrutas(conexion));
+        /*tablaFrutas.setItems(lista);
+        System.out.println(lista);*/
+        
     }
 
 }

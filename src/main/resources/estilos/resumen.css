@@ -23,3 +23,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-left: 50%;
     -fx-border-radius: 20px;
 }
+
+JFXButton{
+    -fx-background-color: linear-gradient(to bottom left, #f78361, #f54b64);
+}

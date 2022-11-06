@@ -31,6 +31,8 @@ public class Validaciones {
         return total;
     }
 
+    
+    //METODO PARA AÑADIR UNA NUEVA FRUTA Y PARA ACTUALIZAR SI LA FRUTA YA ESTA EN EL CARRITO
     public static void nuevaFruta(MongoClient con, int id, String nombre, int cant, double precio) {
 
         //INSERTA NUEVA FRUTA
@@ -50,14 +52,14 @@ public class Validaciones {
         }else{
             //FALTA ACTUALIZAR EL PRECIOTOTAL
             double precioSumador=encontrado.getDouble("precioTotal");
-            
             int cantTotal=encontrado.getInteger("cantidad");
-            Bson actualizado = new Document("cantidad",cantTotal+cant);
+            Document third = collection.find(Filters.eq("_id", encontrado.getInteger("_id"))).first();
             
-            Bson operar = new Document("$set", actualizado);
-            
-            collection.updateOne(encontrado, operar);
-            
+            collection.updateOne(new Document("_id", encontrado.getInteger("_id")),
+                    new Document("$set", new Document("cantidad", cantTotal+cant)));
+            collection.updateOne(new Document("_id", encontrado.getInteger("_id")),
+                    new Document("$set", new Document("precioTotal", precioSumador+(cant*precio))));
+     
             crearAlertaInfo("Carrito actualizado");
         }
     }
@@ -74,7 +76,7 @@ public class Validaciones {
     }
 
     
-
+    //CREAR ALERTA DE INFORMACIÓN
     public static void crearAlertaInfo(String textoAlerta) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
@@ -83,6 +85,8 @@ public class Validaciones {
         alert.showAndWait();
     }
 
+    
+    //CREAR ALERTA DE CONFIRMACIÓN
     public static boolean crearAlertaConf(String confirmar) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
@@ -98,4 +102,13 @@ public class Validaciones {
         }
     }
 
+    
+    //COMPROBAR QUE LOS TXT NO ESTAN VACIOS
+    public static boolean formVacios(String texto){
+        if(texto.isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

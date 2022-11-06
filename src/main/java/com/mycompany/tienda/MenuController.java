@@ -153,8 +153,8 @@ public class MenuController implements Initializable {
     //SELECCIONAMOS EL PRECIO DE LA FRUTA, SEGUN EL ID
     @FXML
     private void calculoPrecio() {
-        
-        if (id == 1){
+        if(Validaciones.formVacios(txtCompra.getText())){
+            if (id == 1){
             lblTotal.setText(String.valueOf((Validaciones.calcularPrecio(Integer.parseInt(txtCompra.getText()), precios[0]))));
         } else if (id == 2){  
             lblTotal.setText(String.valueOf((Validaciones.calcularPrecio(Integer.parseInt(txtCompra.getText()), precios[1]))));
@@ -173,6 +173,10 @@ public class MenuController implements Initializable {
         }else if(id==9){
             lblTotal.setText(String.valueOf((Validaciones.calcularPrecio(Integer.parseInt(txtCompra.getText()), precios[8]))));
         }
+        }else{
+            Validaciones.crearAlertaInfo("Elige la cantidad");
+        }
+        
         
 
     }
@@ -180,9 +184,13 @@ public class MenuController implements Initializable {
     //METODO PARA AÑADIR AL CARRITO
     @FXML
     private void comprar(){
+            if(Validaciones.formVacios(txtCompra.getText())){
+                Validaciones.nuevaFruta(conexion,id,lblCompra.getText() , Integer.parseInt(txtCompra.getText()),precios[id-1]);
+                vaciar.setVisible(true);
+            }else{
+               Validaciones.crearAlertaInfo("Elige la cantidad"); 
+            }
             
-            Validaciones.nuevaFruta(conexion,id,lblCompra.getText() , Integer.parseInt(txtCompra.getText()),precios[id-1]);
-            vaciar.setVisible(true);
          
     }
     

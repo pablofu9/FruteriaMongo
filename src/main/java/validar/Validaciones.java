@@ -5,7 +5,9 @@
 package validar;
 
 import Conect.ConnectionDB;
+import com.jfoenix.controls.JFXComboBox;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
 import com.mongodb.ErrorCategory;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoWriteException;
@@ -13,6 +15,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import static com.mongodb.client.model.Projections.excludeId;
+import static com.mongodb.client.model.Projections.fields;
+import static com.mongodb.client.model.Projections.include;
 import com.mongodb.util.JSON;
 import java.util.*;
 import javafx.collections.FXCollections;
@@ -21,12 +26,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.json.JSONObject;
 
 /**
  *
  * @author Pablo
  */
 public class Validaciones {
+
+       static MongoClient conexion;
 
     public static double calcularPrecio(int cant, double preciokg) {
         double total;
@@ -35,14 +43,13 @@ public class Validaciones {
     }
 
     //METODO PARA AÑADIR UNA NUEVA FRUTA Y PARA ACTUALIZAR SI LA FRUTA YA ESTA EN EL CARRITO
-    public static void nuevaFruta(MongoClient con, int id, String nombre, int cant, double precio) {
-
+    public static void nuevaFruta( int id, String nombre, int cant, double precio) {
+        conexion = ConnectionDB.conectar();
         //INSERTA NUEVA FRUTA
-        MongoDatabase database = con.getDatabase("fruteria");
+        MongoDatabase database = conexion.getDatabase("fruteria");
         MongoCollection<Document> collection = database.getCollection("frutas");
         Document encontrado = (Document) collection.find(new Document("_id", id)).first();
-        if (encontrado == null)
-        {
+        if (encontrado == null) {
             Document d1 = new Document();
             d1.append("_id", id).append("nombre", nombre).append("cantidad", cant)
                     .append("precio", precio).append("precioTotal", cant * precio);
@@ -51,8 +58,7 @@ public class Validaciones {
             crearAlertaInfo("Fruta añadida al carrito");
             //SALTA EXCEPCION CUANDO LA FRUTA YA ESTA EN LA BD
 
-        } else
-        {
+        } else {
             //FALTA ACTUALIZAR EL PRECIOTOTAL
             double precioSumador = encontrado.getDouble("precioTotal");
             int cantTotal = encontrado.getInteger("cantidad");
@@ -66,16 +72,16 @@ public class Validaciones {
             crearAlertaInfo("Carrito actualizado");
         }
     }
+    
 
     //METODO PARA VACAIR EL CARRITO
-    public static void vaciarCarrito(MongoClient con) {
-        MongoDatabase database = con.getDatabase("fruteria");
+    public static void vaciarCarrito() {
+        conexion = ConnectionDB.conectar();
+        MongoDatabase database = conexion.getDatabase("fruteria");
         MongoCollection<Document> collection = database.getCollection("frutas");
-        try
-        {
+        try {
             collection.deleteMany(Filters.gte("_id", 0));
-        } catch (NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
 
         }
     }
@@ -96,49 +102,62 @@ public class Validaciones {
         alert.setTitle("Confirmación");
         alert.setContentText(confirmar);
         Optional<ButtonType> action = alert.showAndWait();
-        if (action.get() == ButtonType.OK)
-        {
+        if (action.get() == ButtonType.OK) {
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
 
     //COMPROBAR QUE LOS TXT NO ESTAN VACIOS
     public static boolean formVacios(String texto) {
-        if (texto.isEmpty())
-        {
+        if (texto.isEmpty()) {
             return false;
-        } else
-        {
+        } else {
             return true;
         }
     }
 
-    public static ObservableList<Document> getFrutas(MongoClient con) {
-        MongoDatabase database = con.getDatabase("fruteria");
+    public static ObservableList<Document> getFrutas() {
+        conexion = ConnectionDB.conectar();
+        MongoDatabase database = conexion.getDatabase("fruteria");
         MongoCollection<Document> collection = database.getCollection("frutas");
         ObservableList<Document> listaTabla;
+        MongoCursor<Document> cursor2 = collection.find().iterator();
+        
+
         listaTabla = FXCollections.observableArrayList();
         
-       
-        MongoCursor<Document> cursor2 = collection.find().iterator();
-        try
-        {
-            
-            while (cursor2.hasNext())
-            {
-               
-                listaTabla.addAll(cursor2.next());
+        
+        try {
+
+            while (cursor2.hasNext()) {
                 
+                listaTabla.add(new Document(cursor2.next()));
+
             }
 
-        } finally
-        {
+        } finally {
             cursor2.close();
         }
 
         return listaTabla;
+    }
+
+    //METODO PARA LLENAR EL COMBOBOX CON LOS NOMBRES DE LAS FRUTAS
+    public static void llenarCombo( JFXComboBox c) {
+        conexion = ConnectionDB.conectar();
+        MongoDatabase db = conexion.getDatabase("fruteria");
+        MongoCollection<Document> col = db.getCollection("frutas");
+
+        List<String> titles = col.find().projection(fields(include("_id"), excludeId())).map(document -> document.getString("nombre")).into(new ArrayList<>());
+        ObservableList<String> lista = FXCollections.observableArrayList(titles);
+        c.setItems(lista);
+        
+    }
+    
+    public static void vaciarCombo(JFXComboBox c){
+      
+        
     }
 }

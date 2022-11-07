@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -10,21 +11,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="578.0" prefWidth="776.0" stylesheets="@../../../estilos/resumen.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tienda.ResumenCompraController">
+<AnchorPane id="AnchorPane" fx:id="btnPagar" prefHeight="511.0" prefWidth="768.0" stylesheets="@../../../estilos/resumen.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tienda.ResumenCompraController">
    <children>
-      <Pane fx:id="panelBanner" prefHeight="141.0" prefWidth="776.0">
+      <Pane fx:id="panelBanner" prefHeight="144.0" prefWidth="154.0">
          <children>
-            <ImageView fitHeight="96.0" fitWidth="123.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="96.0" fitWidth="123.0" layoutX="41.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../Images/IconoFruteria.png" />
                </image>
             </ImageView>
-            <Text fx:id="titulo" layoutX="143.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FRUTERIA FUERTES" />
          </children>
       </Pane>
-      <TableView fx:id="tablaFrutas" layoutX="194.0" layoutY="166.0" prefHeight="264.0" prefWidth="568.0">
+      <TableView fx:id="tablaFrutas" layoutX="192.0" layoutY="20.0" prefHeight="257.0" prefWidth="556.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="83.0" text="ID" />
           <TableColumn fx:id="colNombre" prefWidth="116.0" text="Nombre" />
@@ -38,25 +37,42 @@
             <Font name="Verdana Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="47.0" layoutY="260.0" prefHeight="34.0" prefWidth="103.0" text="Cantidad">
+      <Label layoutX="47.0" layoutY="239.0" prefHeight="34.0" prefWidth="103.0" text="Cantidad">
          <font>
             <Font name="Verdana Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="35.0" layoutY="358.0" prefHeight="34.0" prefWidth="127.0" text="Precio total">
+      <Label layoutX="35.0" layoutY="316.0" prefHeight="34.0" prefWidth="127.0" text="Precio total">
          <font>
             <Font name="Verdana Bold" size="18.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="txtNombre" editable="false" layoutX="31.0" layoutY="199.0" />
-      <JFXTextField fx:id="txtCantidad" layoutX="31.0" layoutY="294.0" />
-      <JFXTextField fx:id="txtPrecioTotal" editable="false" layoutX="35.0" layoutY="399.0" />
-      <JFXButton fx:id="btnVolver" buttonType="RAISED" layoutX="194.0" layoutY="447.0" onAction="#volverAtras" prefHeight="0.0" prefWidth="568.0" text="Volver">
+      <JFXTextField fx:id="txtNombre" editable="false" layoutX="31.0" layoutY="192.0" />
+      <JFXTextField fx:id="txtCantidad" layoutX="31.0" layoutY="264.0" />
+      <JFXTextField fx:id="txtPrecioTotal" editable="false" layoutX="35.0" layoutY="342.0" />
+      <JFXButton fx:id="btnVolver" buttonType="RAISED" layoutX="192.0" layoutY="361.0" onAction="#volverAtras" prefHeight="25.0" prefWidth="556.0" text="Volver">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnActualizar" buttonType="RAISED" layoutX="194.0" layoutY="500.0" prefHeight="0.0" prefWidth="568.0" text="Actualizar">
+      <JFXButton fx:id="btnActualizar" buttonType="RAISED" layoutX="192.0" layoutY="316.0" prefHeight="26.0" prefWidth="556.0" text="Actualizar">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXComboBox fx:id="comboFruta" layoutX="31.0" layoutY="400.0" prefHeight="25.0" prefWidth="135.0" promptText="Selecciona la fruta" />
+      <JFXButton fx:id="btnLimpiar" layoutX="31.0" layoutY="447.0" onAction="#limpiarCombo" prefHeight="26.0" prefWidth="135.0" text="Limpiar filtro">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="210.0" layoutY="443.0" prefHeight="34.0" prefWidth="127.0" text="Ticket: ">
+         <font>
+            <Font name="Verdana Bold" size="18.0" />
+         </font>
+      </Label>
+      <JFXTextField editable="false" layoutX="300.0" layoutY="441.0" />
+      <JFXButton fx:id="btnLimpiar1" layoutX="451.0" layoutY="447.0" onAction="#limpiarCombo" prefHeight="25.0" prefWidth="298.0" text="Pagar">
          <font>
             <Font name="Arial" size="14.0" />
          </font>

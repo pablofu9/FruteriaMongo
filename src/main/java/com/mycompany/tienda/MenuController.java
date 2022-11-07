@@ -42,7 +42,7 @@ import javafx.stage.StageStyle;
  */
 public class MenuController implements Initializable {
 
-    MongoClient conexion;
+   
     /**
      * Initializes the controller class.
      */
@@ -118,22 +118,25 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    private void comprarPapaya() throws MalformedURLException {
-        lblCompra.setText("PAPAYA");
-        Path imageFile = Paths.get("src/main/resources/Images/papaya.png");
-        imagenCompra.setImage(new Image(imageFile.toUri().toURL().toExternalForm()));
-        panelFrutas.setVisible(true);
-        id = ids[5];
-    }
-
-    @FXML
     private void comprarMelon() throws MalformedURLException {
         lblCompra.setText("MELON");
         Path imageFile = Paths.get("src/main/resources/Images/melon.png");
         imagenCompra.setImage(new Image(imageFile.toUri().toURL().toExternalForm()));
         panelFrutas.setVisible(true);
+        id = ids[5];
+
     }
 
+    @FXML
+    private void comprarPapaya() throws MalformedURLException {
+        lblCompra.setText("PAPAYA");
+        Path imageFile = Paths.get("src/main/resources/Images/papaya.png");
+        imagenCompra.setImage(new Image(imageFile.toUri().toURL().toExternalForm()));
+        panelFrutas.setVisible(true);
+        id = ids[6];
+    }
+
+    
     @FXML
     private void comprarAguacate() throws MalformedURLException {
         lblCompra.setText("AGUACATE");
@@ -191,7 +194,7 @@ public class MenuController implements Initializable {
     @FXML
     private void comprar(){
             if(Validaciones.formVacios(txtCompra.getText())){
-                Validaciones.nuevaFruta(conexion,id,lblCompra.getText() , Integer.parseInt(txtCompra.getText()),precios[id-1]);
+                Validaciones.nuevaFruta(id,lblCompra.getText() , Integer.parseInt(txtCompra.getText()),precios[id-1]);
                 vaciar.setVisible(true);
             }else{
                Validaciones.crearAlertaInfo("Elige la cantidad"); 
@@ -204,7 +207,7 @@ public class MenuController implements Initializable {
     @FXML
     private void vaciarCarrito(){
         if(Validaciones.crearAlertaConf("¿Seguro que quieres vaciar el carrito?")){
-            Validaciones.vaciarCarrito(conexion);
+            Validaciones.vaciarCarrito();
         }else{
             Validaciones.crearAlertaInfo("Sigue comprando");
         }
@@ -229,8 +232,7 @@ public class MenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //CONECTA AL INICIAR LA CLASE
-        conexion=ConnectionDB.conectar();
-        MongoDatabase database= conexion.getDatabase("fruteria");
+        
     }
 
 }

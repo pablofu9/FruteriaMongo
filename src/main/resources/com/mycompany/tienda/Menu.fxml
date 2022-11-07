@@ -11,13 +11,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="647.0" prefWidth="906.0" stylesheets="@../../../estilos/estiloMenu.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tienda.MenuController">
+<AnchorPane id="AnchorPane" prefHeight="647.0" prefWidth="906.0" stylesheets="@../../../estilos/estiloMenu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.tienda.MenuController">
    <children>
       <Pane fx:id="mandarina" layoutX="291.0" layoutY="24.0" prefHeight="125.0" prefWidth="158.0" stylesheets="@../../../estilos/estiloMenu.css">
          <children>
             <ImageView fitHeight="35.0" fitWidth="39.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="file:/D:/DAM/Acceso%20a%20datos/Tienda/src/main/resources/Images/naranja.png" />
+                  <Image url="@../../../Images/naranja.png" />
                </image>
             </ImageView>
             <Label layoutX="51.0" layoutY="10.0" text="NARANJA">

@@ -6,6 +6,7 @@ package com.mycompany.tienda;
 
 import Conect.ConnectionDB;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -38,11 +39,10 @@ import validar.Validaciones;
  */
 public class ResumenCompraController implements Initializable {
 
-    MongoClient conexion;
-
-    /**
-     * Initializes the controller class.
-     */
+ 
+    @FXML
+    private JFXComboBox comboFruta;
+    
     @FXML
     private JFXButton btnVolver, btnActualizar;
     
@@ -78,23 +78,30 @@ public class ResumenCompraController implements Initializable {
         Stage loginStage = (Stage) this.btnVolver.getScene().getWindow();
         loginStage.close();
     }
+    
+    @FXML
+    private void limpiarCombo(){
+        //Validaciones.vaciarCombo(comboFruta);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        conexion = ConnectionDB.conectar();
-        MongoDatabase database = conexion.getDatabase("fruteria");
         
-        colId.setCellValueFactory(new PropertyValueFactory<Document, Integer>("_id"));
+        
+        
+        colId.setCellValueFactory(new PropertyValueFactory<Document, Integer>("_id")) ;
         colNombre.setCellValueFactory(new PropertyValueFactory<Document, String>("nombre"));
         colCantidad.setCellValueFactory(new PropertyValueFactory<Document, Integer>("cantidad"));
         colPrecio.setCellValueFactory(new PropertyValueFactory<Document, Double>("precio"));
         colPrecioTotal.setCellValueFactory(new PropertyValueFactory<Document, Double>("precioTotal"));
         
         ObservableList<Document> lista;
-        lista=Validaciones.getFrutas(conexion);
+        lista=Validaciones.getFrutas();
         //FALTA LLENAR LA TABlA
-        /*tablaFrutas.setItems(lista);
-        System.out.println(lista);*/
+        //tablaFrutas.setItems(lista);
+        System.out.println(Validaciones.getFrutas());
         
+        Validaciones.llenarCombo(comboFruta);
     }
 
 }

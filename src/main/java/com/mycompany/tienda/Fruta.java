@@ -23,6 +23,10 @@ public class Fruta {
         this. precioTotal = precio*cantidad;
     }
 
+    public Fruta() {
+      
+    }
+
     public int getId() {
         return id;
     }

@@ -23,15 +23,6 @@
             </ImageView>
          </children>
       </Pane>
-      <TableView fx:id="tablaFrutas" layoutX="192.0" layoutY="20.0" prefHeight="257.0" prefWidth="556.0">
-        <columns>
-          <TableColumn fx:id="colId" prefWidth="83.0" text="ID" />
-          <TableColumn fx:id="colNombre" prefWidth="116.0" text="Nombre" />
-            <TableColumn fx:id="colCantidad" prefWidth="122.0" text="Cantidad" />
-            <TableColumn fx:id="colPrecio" prefWidth="115.0" text="Precio/u" />
-            <TableColumn fx:id="colPrecioTotal" prefWidth="131.0" text="Precio Total" />
-        </columns>
-      </TableView>
       <Label layoutX="47.0" layoutY="165.0" prefHeight="34.0" prefWidth="103.0" text="Nombre">
          <font>
             <Font name="Verdana Bold" size="18.0" />
@@ -77,5 +68,14 @@
             <Font name="Arial" size="14.0" />
          </font>
       </JFXButton>
+      <TableView fx:id="tablaFrutas" layoutX="192.0" layoutY="20.0" prefHeight="257.0" prefWidth="556.0">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="83.0" text="ID" />
+          <TableColumn fx:id="colNombre" prefWidth="116.0" text="Nombre" />
+            <TableColumn fx:id="colCantidad" prefWidth="122.0" text="Cantidad" />
+            <TableColumn fx:id="colPrecio" prefWidth="115.0" text="Precio/u" />
+            <TableColumn fx:id="colPrecioTotal" prefWidth="131.0" text="Precio Total" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

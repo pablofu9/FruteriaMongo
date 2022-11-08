@@ -112,7 +112,7 @@ public class ResumenCompraController implements Initializable {
         //FALTA LLENAR LA TABlA
         tablaFrutas.setItems(lista);*/
         
-        //System.out.println(Validaciones.getFrutas());
+        Validaciones.getFrutas();
        //Validaciones.getFrutas();
         
         Validaciones.llenarCombo(comboFruta);

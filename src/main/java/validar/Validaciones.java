@@ -9,9 +9,11 @@ import com.google.gson.Gson;
 import com.jfoenix.controls.JFXComboBox;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.ErrorCategory;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoWriteException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -120,7 +122,7 @@ public class Validaciones {
         }
     }
 
-  /* public static ObservableList<Fruta> getFrutas() {
+  public static ObservableList<Document> getFrutas() {
        ArrayList<Fruta> f;
         conexion = ConnectionDB.conectar();
         MongoDatabase database = conexion.getDatabase("fruteria");
@@ -130,19 +132,19 @@ public class Validaciones {
         MongoCursor<Document> cur = coll.find().iterator();
        
        
-        ObservableList<Fruta> listaTabla=FXCollections.observableArrayList();
+        ObservableList<Document> listaTabla=FXCollections.observableArrayList();
       
+       
         while(cur.hasNext()){
-           
+            System.out.println(cur.next()); //COMO CONVIERTO ESTO A UN OBSERVABLELIST DE FRUTAS
         }
-        
         
         
         
 
         return listaTabla;
     }
-   */
+   
     
     
     //METODO PARA LLENAR EL COMBOBOX CON LOS NOMBRES DE LAS FRUTAS

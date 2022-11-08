@@ -58,7 +58,7 @@
          </font>
       </Label>
       <JFXTextField fx:id="txtTicket" editable="false" layoutX="401.0" layoutY="441.0" />
-      <JFXButton fx:id="btnLimpiar1" layoutX="192.0" layoutY="367.0" onAction="#limpiarCombo" prefHeight="26.0" prefWidth="556.0" text="Pagar">
+      <JFXButton fx:id="btnFin" layoutX="192.0" layoutY="367.0" onAction="#finalizar" prefHeight="26.0" prefWidth="556.0" text="Pagar">
          <font>
             <Font name="Arial" size="14.0" />
          </font>

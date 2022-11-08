@@ -15,6 +15,7 @@ import com.mongodb.client.MongoDatabase;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import static javafx.application.Platform.exit;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -44,7 +45,7 @@ public class ResumenCompraController implements Initializable {
     private JFXComboBox comboFruta;
 
     @FXML
-    private JFXButton btnVolver;
+    private JFXButton btnVolver,btnLimpiar,btnFin;
 
     @FXML
     private JFXTextField txtNombre, txtCantidad, txtPrecioTotal,txtTicket;
@@ -137,14 +138,21 @@ public class ResumenCompraController implements Initializable {
             t +=p;
         }
         txtTicket.setText(String.valueOf(t+" €"));
+        
     }
-
+    @FXML
+    private void finalizar(){
+        Validaciones.crearAlertaInfo("Gracias por su visita");
+       exit();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         llenarTabla();
-        
+         
         Validaciones.llenarCombo(comboFruta);
         sumarTotal();
+        
     }
 
 }

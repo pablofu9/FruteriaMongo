@@ -120,26 +120,31 @@ public class Validaciones {
         }
     }
 
-    /*public static ObservableList<Fruta> getFrutas() {
+  /* public static ObservableList<Fruta> getFrutas() {
+       ArrayList<Fruta> f;
         conexion = ConnectionDB.conectar();
         MongoDatabase database = conexion.getDatabase("fruteria");
-        //MongoCollection<Document> collection = database.getCollection("frutas");
-        MongoCollection <org.bson.Document> coll = database.getCollection("frutas");
-        Document doc = (Document) coll.find().iterator();
-        Gson gson = new Gson();
-        Fruta f = gson.fromJson(doc.toJson(), Fruta.class);
+       
+        MongoCollection <Document> coll = database.getCollection("frutas");
+        
+        MongoCursor<Document> cur = coll.find().iterator();
+       
+       
         ObservableList<Fruta> listaTabla=FXCollections.observableArrayList();
+      
+        while(cur.hasNext()){
+           
+        }
         
         
         
-        listaTabla.add(new Fruta(f.getId()));
-        System.out.println(listaTabla);
         
-        System.out.println(f);
 
         return listaTabla;
     }
-*/
+   */
+    
+    
     //METODO PARA LLENAR EL COMBOBOX CON LOS NOMBRES DE LAS FRUTAS
     public static void llenarCombo( JFXComboBox c) {
         conexion = ConnectionDB.conectar();

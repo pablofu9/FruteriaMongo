@@ -84,6 +84,18 @@ public class ResumenCompraController implements Initializable {
         //Validaciones.vaciarCombo(comboFruta);
     }
     
+    //PARA VER QUE FILA ESTA SELECCIONADA
+    public void getSelected() {
+        int index = tablaFrutas.getSelectionModel().getSelectedIndex();
+        if (index <= -1) {
+            return;
+        }
+        txtNombre.setText(colNombre.getCellData(index).toString());
+        txtCantidad.setText(colCantidad.getCellData(index).toString());
+        txtPrecioTotal.setText(colPrecioTotal.getCellData(index).toString());
+       
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -98,12 +110,13 @@ public class ResumenCompraController implements Initializable {
        /* ObservableList<Fruta> lista;
         lista=Validaciones.getFrutas();
         //FALTA LLENAR LA TABlA
-        tablaFrutas.setItems(lista);
+        tablaFrutas.setItems(lista);*/
         
-        System.out.println(Validaciones.getFrutas());*/
+        //System.out.println(Validaciones.getFrutas());
        //Validaciones.getFrutas();
         
         Validaciones.llenarCombo(comboFruta);
+        
     }
 
 }

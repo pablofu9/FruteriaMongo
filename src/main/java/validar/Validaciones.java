@@ -38,7 +38,7 @@ import org.json.JSONObject;
  */
 public class Validaciones {
 
-       static MongoClient conexion;
+    static MongoClient conexion;
 
     public static double calcularPrecio(int cant, double preciokg) {
         double total;
@@ -47,7 +47,7 @@ public class Validaciones {
     }
 
     //METODO PARA AÑADIR UNA NUEVA FRUTA Y PARA ACTUALIZAR SI LA FRUTA YA ESTA EN EL CARRITO
-    public static void nuevaFruta( int id, String nombre, int cant, double precio) {
+    public static void nuevaFruta(int id, String nombre, int cant, double precio) {
         conexion = ConnectionDB.conectar();
         //INSERTA NUEVA FRUTA
         MongoDatabase database = conexion.getDatabase("fruteria");
@@ -76,7 +76,6 @@ public class Validaciones {
             crearAlertaInfo("Carrito actualizado");
         }
     }
-    
 
     //METODO PARA VACAIR EL CARRITO
     public static void vaciarCarrito() {
@@ -122,33 +121,26 @@ public class Validaciones {
         }
     }
 
-  public static ObservableList<Document> getFrutas() {
-       ArrayList<Fruta> f;
+    public static ObservableList<Fruta> getFrutas() {
+        ObservableList<Fruta> listaTabla = FXCollections.observableArrayList();
         conexion = ConnectionDB.conectar();
         MongoDatabase database = conexion.getDatabase("fruteria");
-       
-        MongoCollection <Document> coll = database.getCollection("frutas");
-        
-        MongoCursor<Document> cur = coll.find().iterator();
-       
-       
-        ObservableList<Document> listaTabla=FXCollections.observableArrayList();
-      
-       
-        while(cur.hasNext()){
-            System.out.println(cur.next()); //COMO CONVIERTO ESTO A UN OBSERVABLELIST DE FRUTAS
+
+        MongoCollection coll = database.getCollection("frutas");
+
+        MongoCursor<Document> data = coll.find().iterator();
+        while (data.hasNext()) {
+            Document f1 = data.next();
+            listaTabla.add(new Fruta(f1.getInteger("_id"), f1.getString("nombre"), f1.getInteger("cantidad"), f1.getDouble("precio")));
+            //COMO CONVIERTO ESTO A UN OBSERVABLELIST DE FRUTAS
         }
         
-        
-        
-
         return listaTabla;
+
     }
-   
-    
-    
+
     //METODO PARA LLENAR EL COMBOBOX CON LOS NOMBRES DE LAS FRUTAS
-    public static void llenarCombo( JFXComboBox c) {
+    public static void llenarCombo(JFXComboBox c) {
         conexion = ConnectionDB.conectar();
         MongoDatabase db = conexion.getDatabase("fruteria");
         MongoCollection<Document> col = db.getCollection("frutas");
@@ -156,11 +148,23 @@ public class Validaciones {
         List<String> titles = col.find().projection(fields(include("_id"), excludeId())).map(document -> document.getString("nombre")).into(new ArrayList<>());
         ObservableList<String> lista = FXCollections.observableArrayList(titles);
         c.setItems(lista);
-        
+
     }
+
     
-    public static void vaciarCombo(JFXComboBox c){
-      
-        
+
+    public static ObservableList<Fruta> itemCombo(JFXComboBox c) {
+        conexion = ConnectionDB.conectar();
+        MongoDatabase db = conexion.getDatabase("fruteria");
+        MongoCollection<Document> col = db.getCollection("frutas");
+        String nom = c.getValue().toString();
+        Document encontrado = col.find(Filters.eq("nombre", nom)).first();
+        ObservableList<Fruta> listaTabla = FXCollections.observableArrayList();
+
+        listaTabla.add(new Fruta(encontrado.getInteger("_id"), encontrado.getString("nombre"),
+                encontrado.getInteger("cantidad"), encontrado.getDouble("precio")));
+
+        return listaTabla;
     }
+
 }

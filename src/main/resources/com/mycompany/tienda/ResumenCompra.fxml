@@ -41,34 +41,29 @@
       <JFXTextField fx:id="txtNombre" editable="false" layoutX="31.0" layoutY="192.0" />
       <JFXTextField fx:id="txtCantidad" layoutX="31.0" layoutY="264.0" />
       <JFXTextField fx:id="txtPrecioTotal" editable="false" layoutX="35.0" layoutY="342.0" />
-      <JFXButton fx:id="btnVolver" buttonType="RAISED" layoutX="192.0" layoutY="361.0" onAction="#volverAtras" prefHeight="25.0" prefWidth="556.0" text="Volver">
+      <JFXButton fx:id="btnVolver" buttonType="RAISED" layoutX="192.0" layoutY="303.0" onAction="#volverAtras" prefHeight="25.0" prefWidth="556.0" text="Volver">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnActualizar" buttonType="RAISED" layoutX="192.0" layoutY="316.0" prefHeight="26.0" prefWidth="556.0" text="Actualizar">
-         <font>
-            <Font name="Arial" size="14.0" />
-         </font>
-      </JFXButton>
-      <JFXComboBox fx:id="comboFruta" layoutX="31.0" layoutY="400.0" prefHeight="25.0" prefWidth="135.0" promptText="Selecciona la fruta" />
+      <JFXComboBox fx:id="comboFruta" layoutX="31.0" layoutY="400.0" onAction="#filtro" prefHeight="25.0" prefWidth="135.0" promptText="Selecciona la fruta" />
       <JFXButton fx:id="btnLimpiar" layoutX="31.0" layoutY="447.0" onAction="#limpiarCombo" prefHeight="26.0" prefWidth="135.0" text="Limpiar filtro">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
       </JFXButton>
-      <Label layoutX="210.0" layoutY="443.0" prefHeight="34.0" prefWidth="127.0" text="Ticket: ">
+      <Label layoutX="311.0" layoutY="443.0" prefHeight="34.0" prefWidth="127.0" text="Ticket: ">
          <font>
             <Font name="Verdana Bold" size="18.0" />
          </font>
       </Label>
-      <JFXTextField editable="false" layoutX="300.0" layoutY="441.0" />
-      <JFXButton fx:id="btnLimpiar1" layoutX="451.0" layoutY="447.0" onAction="#limpiarCombo" prefHeight="25.0" prefWidth="298.0" text="Pagar">
+      <JFXTextField fx:id="txtTicket" editable="false" layoutX="401.0" layoutY="441.0" />
+      <JFXButton fx:id="btnLimpiar1" layoutX="192.0" layoutY="367.0" onAction="#limpiarCombo" prefHeight="26.0" prefWidth="556.0" text="Pagar">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
       </JFXButton>
-      <TableView fx:id="tablaFrutas" layoutX="192.0" layoutY="20.0" prefHeight="257.0" prefWidth="556.0">
+      <TableView fx:id="tablaFrutas" layoutX="192.0" layoutY="20.0" onMouseClicked="#getSelected" prefHeight="257.0" prefWidth="556.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="83.0" text="ID" />
           <TableColumn fx:id="colNombre" prefWidth="116.0" text="Nombre" />

@@ -5,6 +5,7 @@
 package validar;
 
 import Conect.ConnectionDB;
+import com.google.gson.Gson;
 import com.jfoenix.controls.JFXComboBox;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
@@ -19,6 +20,7 @@ import static com.mongodb.client.model.Projections.excludeId;
 import static com.mongodb.client.model.Projections.fields;
 import static com.mongodb.client.model.Projections.include;
 import com.mongodb.util.JSON;
+import com.mycompany.tienda.Fruta;
 import java.util.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -118,32 +120,26 @@ public class Validaciones {
         }
     }
 
-    public static ObservableList<Document> getFrutas() {
+    /*public static ObservableList<Fruta> getFrutas() {
         conexion = ConnectionDB.conectar();
         MongoDatabase database = conexion.getDatabase("fruteria");
-        MongoCollection<Document> collection = database.getCollection("frutas");
-        ObservableList<Document> listaTabla;
-        MongoCursor<Document> cursor2 = collection.find().iterator();
+        //MongoCollection<Document> collection = database.getCollection("frutas");
+        MongoCollection <org.bson.Document> coll = database.getCollection("frutas");
+        Document doc = (Document) coll.find().iterator();
+        Gson gson = new Gson();
+        Fruta f = gson.fromJson(doc.toJson(), Fruta.class);
+        ObservableList<Fruta> listaTabla=FXCollections.observableArrayList();
         
-
-        listaTabla = FXCollections.observableArrayList();
         
         
-        try {
-
-            while (cursor2.hasNext()) {
-                
-                listaTabla.add(new Document(cursor2.next()));
-
-            }
-
-        } finally {
-            cursor2.close();
-        }
+        listaTabla.add(new Fruta(f.getId()));
+        System.out.println(listaTabla);
+        
+        System.out.println(f);
 
         return listaTabla;
     }
-
+*/
     //METODO PARA LLENAR EL COMBOBOX CON LOS NOMBRES DE LAS FRUTAS
     public static void llenarCombo( JFXComboBox c) {
         conexion = ConnectionDB.conectar();

@@ -53,18 +53,18 @@ public class ResumenCompraController implements Initializable {
     private Text titulo;
 
     @FXML
-    public TableView<Document> tablaFrutas;
+    public TableView<Fruta> tablaFrutas;
     @FXML
-    public TableColumn<Document, Integer> colId;
+    public TableColumn<Fruta, Integer> colId;
     @FXML
-    public TableColumn<Document, Integer> colCantidad;
+    public TableColumn<Fruta, Integer> colCantidad;
     @FXML
-    public TableColumn<Document, String> colNombre;
+    public TableColumn<Fruta, String> colNombre;
     @FXML
-    public TableColumn<Document, Double> colPrecio;
+    public TableColumn<Fruta, Double> colPrecio;
 
     @FXML
-    public TableColumn<Document, Double> colPrecioTotal;
+    public TableColumn<Fruta, Double> colPrecioTotal;
     
     @FXML
     private void volverAtras() throws IOException{
@@ -88,18 +88,20 @@ public class ResumenCompraController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         
+        //COLUMNAS DE LA TABLA
+        colId.setCellValueFactory(new PropertyValueFactory<Fruta, Integer>("id")) ;
+        colNombre.setCellValueFactory(new PropertyValueFactory<Fruta, String>("nombre"));
+        colCantidad.setCellValueFactory(new PropertyValueFactory<Fruta, Integer>("cantidad"));
+        colPrecio.setCellValueFactory(new PropertyValueFactory<Fruta, Double>("precio"));
+        colPrecioTotal.setCellValueFactory(new PropertyValueFactory<Fruta, Double>("precioTotal"));
         
-        colId.setCellValueFactory(new PropertyValueFactory<Document, Integer>("_id")) ;
-        colNombre.setCellValueFactory(new PropertyValueFactory<Document, String>("nombre"));
-        colCantidad.setCellValueFactory(new PropertyValueFactory<Document, Integer>("cantidad"));
-        colPrecio.setCellValueFactory(new PropertyValueFactory<Document, Double>("precio"));
-        colPrecioTotal.setCellValueFactory(new PropertyValueFactory<Document, Double>("precioTotal"));
-        
-        ObservableList<Document> lista;
+       /* ObservableList<Fruta> lista;
         lista=Validaciones.getFrutas();
         //FALTA LLENAR LA TABlA
-        //tablaFrutas.setItems(lista);
-        System.out.println(Validaciones.getFrutas());
+        tablaFrutas.setItems(lista);
+        
+        System.out.println(Validaciones.getFrutas());*/
+       //Validaciones.getFrutas();
         
         Validaciones.llenarCombo(comboFruta);
     }
